@@ -1,0 +1,37 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using ToDoMVC.Utils
+@model TaskModel
+@{
+ViewData["Title"] = "Create Task";
+var categories = ViewBag.Categories as List<CategoryModel>;
+}
+
+<h1>Create Task</h1>
+<form method="post" action="/Task/Create">
+    <div class="mb-3">
+        <label for="Title" class="form-label">Title</label>
+        <input type="text" name="Title" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label for="Category.Id" class="form-label">Category</label>
+        <select name="Category.Id" class="form-select">
+            @if (categories != null)
+            {
+                foreach (var category in categories)
+                {
+                    <option value="@category.Id">@category</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="State" class="form-label">State</label>
+        <select name="State" class="form-select">
+            @foreach (State state in Enum.GetValues(typeof(State)))
+            {
+            <option value="@state">@state</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

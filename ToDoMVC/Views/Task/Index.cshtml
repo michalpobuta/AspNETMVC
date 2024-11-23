@@ -1,0 +1,32 @@
+@model IList<TaskModel>
+@{
+ViewData["Title"] = "Tasks";
+}
+
+<h1>Task List</h1>
+<a href="/Task/Create" class="btn btn-primary mb-3">Add New Task</a>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Category</th>
+        <th>State</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var task in Model)
+    {
+    <tr>
+        <td>@task.Title</td>
+        <td>@(task.Category?.Name ?? "Uncategorized")</td>
+        <td>@task.State</td>
+        <td>
+            <a href="/Task/Edit/@task.Id" class="btn btn-warning btn-sm">Edit</a>
+            <a href="/Task/Delete/@task.Id" class="btn btn-danger btn-sm">Delete</a>
+        </td>
+    </tr>
+    }
+    </tbody>
+</table>

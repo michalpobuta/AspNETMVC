@@ -1,0 +1,52 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using ToDoMVC.Utils
+@model TaskModel
+@{
+    ViewData["Title"] = "Edit Task";
+    var categories = ViewBag.Categories as List<CategoryModel>;
+}
+
+<h1>Edit Task</h1>
+<form method="post" action="/Task/Edit">
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <div class="mb-3">
+        <label for="Title" class="form-label">Title</label>
+        <input type="text" name="Title" class="form-control" value="@Model.Title" required />
+    </div>
+    <div class="mb-3">
+        <label for="Category.Id" class="form-label">Category</label>
+        <select name="Category.Id" class="form-select">
+            @if (categories != null)
+            {
+                foreach (var category in categories)
+                {
+                    @if (category.Id == @Model.Category.Id)
+                    {
+                        <option selected="selected" value="@category">@category.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@category">@category.Name</option>
+                    }
+                }
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="State" class="form-label">State</label>
+        <select name="State" class="form-select">
+            @foreach (State state in Enum.GetValues(typeof(State)))
+            {
+                @if (state == @Model.State)
+                {
+                    <option selected="selected" value="@state">@state</option>
+                }
+                else
+                {
+                    <option value="@state">@state</option>   
+                }
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
